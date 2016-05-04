@@ -115,7 +115,7 @@ var pictures = [
 	'<img class="movieStills" id="crystal" src="assets/images/crystal.png">'	
 ];
 
-// Question number
+// Counters for questions, answers, and time
 var qNumber = 0;
 var correct = 0;
 var incorrect = 0;
@@ -129,6 +129,10 @@ $('.button').hover(
   }
 );
 
+function stopTime(){
+	clearInteval(counter);
+};
+
 // function hover(){
 // 	$('div.button').hover.addClass('hover');
 // }
@@ -139,10 +143,30 @@ $('#start').on('click', function(){
 
 });
 
+function displayTime(){
+	var time = 3;
+	$('#timeDisplay').html('Time remaining: ' + time + ' seconds');
+	counter = setInterval(decrement, 1000);
+	function decrement(){
+		time--;
+		$('#timeDisplay').html('Time remaining: ' + time + ' seconds');
+		if(time == 0){
+			console.log('Outta time');
+			$('#question, #answerDisplay').empty();
+			$('#result').html('You\'ve run out of time');
+			$('#correctAnswer').html('The correct answer is: ' + questions[qNumber].choices[questions[qNumber].answer]);
+			unanswered++;			
+			$('#imageResult').html(pictures[qNumber]);
+			setTimeout(fiveSeconds, 2000);
+			clearInterval(counter);
+		}
+	}
+};
 
 
 // Displays the question
 function displayQuestion(qNumber){
+	displayTime();
 	$('#start, #intro').remove();
 	$('#question').html(questions[qNumber].question);
 	displayChoices(qNumber);
@@ -206,6 +230,7 @@ function fiveSeconds(){
 	else{
 		console.log('Correct: ' + correct);
 		console.log('Incorrect: ' + incorrect);
+		console.log('Unanswered: ' + unanswered);
 
 	}
 };

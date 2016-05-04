@@ -82,6 +82,10 @@ img.cover {
 	box-shadow: 5px -3px 5px black;
 }
 
+#timeDisplay {
+	padding-bottom: 10px;
+}
+
 .button {
 	box-sizing: border-box;
 	border-style: solid;
