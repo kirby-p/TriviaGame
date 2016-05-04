@@ -102,17 +102,17 @@ var questions = [{
 
 // Picture array
 var pictures = [
-	'<img id="captain" src="assets/images/captain.png">',
-	'<img id="twinkies" src="assets/images/twinkies.png">',
-	'<img id="buddy" src="assets/images/buddy.gif">',
-	'<img id="campMVP" src="assets/images/campMVP.png">',
-	'<img id="blob" src="assets/images/blob.gif">',	
-	'<img id="dance" src="assets/images/dance.png">',
-	'<img id="pounds" src="assets/images/pounds.png">',
-	'<img id="race" src="assets/images/race.png">',
-	'<img id="kiss" src="assets/images/kiss.png">',
-	'<img id="yoga" src="assets/images/yoga.png">',
-	'<img id="crystal" src="assets/images/crystal.png">'	
+	'<img class="movieStills" id="captain" src="assets/images/captain.png">',
+	'<img class="movieStills" id="twinkies" src="assets/images/twinkies.png">',
+	'<img class="movieStills" id="buddy" src="assets/images/buddy.gif">',
+	'<img class="movieStills" id="campMVP" src="assets/images/campMVP.png">',
+	'<img class="movieStills" id="blob" src="assets/images/blob.gif">',	
+	'<img class="movieStills" id="dance" src="assets/images/dance.png">',
+	'<img class="movieStills" id="pounds" src="assets/images/pounds.png">',
+	'<img class="movieStills" id="race" src="assets/images/race.png">',
+	'<img class="movieStills" id="kiss" src="assets/images/kiss.png">',
+	'<img class="movieStills" id="yoga" src="assets/images/yoga.png">',
+	'<img class="movieStills" id="crystal" src="assets/images/crystal.png">'	
 ];
 
 // Question number
@@ -121,29 +121,53 @@ var correct = 0;
 var incorrect = 0;
 var unanswered = 0; 
 
+$('.button').hover(
+  function() {
+    $(this).addClass('hover');
+  }, function() {
+    $(this).removeClass('hover');
+  }
+);
+
+// function hover(){
+// 	$('div.button').hover.addClass('hover');
+// }
+
 // "Start" will begin the trivia game
 $('#start').on('click', function(){
 	displayQuestion(qNumber);
+
 });
+
+
 
 // Displays the question
 function displayQuestion(qNumber){
-	$('#start').remove();
+	$('#start, #intro').remove();
 	$('#question').html(questions[qNumber].question);
 	displayChoices(qNumber);
+
+// Hover effect on buttons
+	$('.button').hover(
+		function() {$(this).addClass('hover');}, 
+		function() {$(this).removeClass('hover');}
+	);	
 };
+
+
 
 // Displays the choices
 function displayChoices(qNumber){
 	var list = '';
 	for(i = 0; i < questions[qNumber].choices.length; i++){
-		list += '<div class=choices id=selection' + [i] + '>' + questions[qNumber].choices[i] + '</div>';
+		list += '<div class="choices button" id=selection' + [i] + '>' + questions[qNumber].choices[i] + '</div>';
 	};
 
 	$('#answerDisplay').html(list);
 
 	$('.choices').bind('click', function(){
 		var value = $(this).attr('id');
+		console.log(value);
 		compare(value, qNumber);
 	});
 };
@@ -151,6 +175,7 @@ function displayChoices(qNumber){
 // Checks if answer is correct
 function compare(selection, qNumber) {
 	var userChoice = selection;
+	console.log(userChoice);
 	if(selection == ('selection' + questions[qNumber].answer)) {
 		console.log('match');
 		$('#question, #answerDisplay').empty();
@@ -164,14 +189,14 @@ function compare(selection, qNumber) {
 		$('#correctAnswer').html('The correct answer is: ' + questions[qNumber].choices[questions[qNumber].answer]);
 		incorrect++;
 	}
-	$('#image').html(pictures[qNumber]);
+	$('#imageResult').html(pictures[qNumber]);
 	setTimeout(fiveSeconds, 2000);
 };
 
 // Timer changes to next question after 5 seconds
 function fiveSeconds(){
 	qNumber++;
-		$('#image').empty();
+		$('#imageResult').empty();
 		$('#result').empty();
 		$('#correctAnswer').empty();
 	if(qNumber < questions.length){
