@@ -1,10 +1,10 @@
 var questions = [{
-	'question': 'What is 2*5?',
+	'question': 'What nickname is given to Gerry?',
 	'choices': [
-		2, 
-		5, 
-		10, 
-		15
+		'Dave', 
+		'Fatso', 
+		'Captain', 
+		'Colonel Sanders'
 	],
 	'answer': 2
 }, {
@@ -18,32 +18,28 @@ var questions = [{
 	'answer': 0
 }];
 
-var twinkies = 	'<img id="twinkies" src="assets/images/twinkies.png">';
-
 var pictures = [
-	'ten',
-	twinkies
+	'<img id="captain" src="assets/images/captain.png">',
+	'<img id="twinkies" src="assets/images/twinkies.png">'
 ];
-var qNumber = 1;
+var qNumber = 0;
 
 
 $('#start').on('click', function(){
 	var correct = 0;
 	var incorrect = 0;
 	var unanswered = 0; 
-	displayQuestion();
-	displayChoices();
+	displayQuestion(qNumber);
 });
 
-function displayQuestion(){
+function displayQuestion(qNumber){
 	$('#start').remove();
-	$('#question').html(questions.question);
-	displayChoices();
+	$('#question').html(questions[qNumber].question);
+	displayChoices(qNumber);
 };
 
-function displayChoices(){
+function displayChoices(qNumber){
 	var list = '';
-
 	for(i = 0; i < questions[qNumber].choices.length; i++){
 		list += '<div class=choices id=selection' + [i] + '>' + questions[qNumber].choices[i] + '</div>';
 	};
@@ -52,24 +48,32 @@ function displayChoices(){
 
 	$('.choices').bind('click', function(){
 		var value = $(this).attr('id');
-		compare(value);
+		compare(value, qNumber);
 	});
 };
 
-function compare(selection) {
+function compare(selection, qNumber) {
 	var userChoice = selection;
 	if(selection == ('selection' + questions[qNumber].answer)) {
 		console.log('match');
-		$('#question, #answerDisplay').remove();
+		$('#question, #answerDisplay').empty();
 		$('#result').html('Yes!');
 	}
 	else {
 		console.log('nope');
-		$('#question, #answerDisplay').remove();
+		$('#question, #answerDisplay').empty();
 		$('#result').html('Nope!');
 		$('#correctAnswer').html('The correct answer is: ' + questions[qNumber].choices[questions[qNumber].answer]);
 	}
 	$('#image').html(pictures[qNumber]);
+	setTimeout(fiveSeconds, 5000);
 };
 
+function fiveSeconds(){
+	qNumber++;
+	$('#image').empty();
+	$('#result').empty();
+	$('#correctAnswer').empty();
+	displayQuestion(qNumber);
+};
 
