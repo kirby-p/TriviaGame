@@ -20,3 +20,13 @@ header {
 	width: 100px;
 	margin: auto;
 }
+
+.choices {
+	box-sizing: border-box;;
+	border-style: solid;
+	color: black;
+	border-width: 5px;
+	text-align: center;
+	width: 400px;
+	margin: auto auto 10px auto;
+}
