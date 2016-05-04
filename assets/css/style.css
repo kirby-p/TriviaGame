@@ -41,15 +41,22 @@ h1.subfont {
 img.cover {
 	width: 95%;
 	box-shadow: 5px -3px 5px black;
-
+	margin: auto;
 }
 
+img.movieStills {
+	width: auto;
+	box-shadow: 5px -3px 5px black;
+	margin-top: 5px;
+	max-height: 300px;
+}
 #game {
 	float: left;
 	width: 50%;
 }
 #question {
 	padding-bottom: 10px;
+	font-size: 25px;
 }
 
 #container {
@@ -61,16 +68,10 @@ img.cover {
 	text-align: center;
 	padding-top: 15px;
 	padding-bottom: 15px;
-	height: auto;
+	height: 550px;
 	overflow: auto;
 	background-color: lightblue;
 
-}
-
-.movieStills {
-	width: 90%;
-	height: auto;
-	margin: auto;
 }
 
 #intro {
@@ -84,8 +85,12 @@ img.cover {
 
 #timeDisplay {
 	padding-bottom: 10px;
+	font-size: 20px;
 }
 
+#result, #correctAnswer, # {
+	font-size: 20px;
+}
 .button {
 	box-sizing: border-box;
 	border-style: solid;

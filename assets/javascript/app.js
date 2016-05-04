@@ -121,6 +121,7 @@ var correct = 0;
 var incorrect = 0;
 var unanswered = 0; 
 
+// Hover effect
 $('.button').hover(
   function() {
     $(this).addClass('hover');
@@ -133,10 +134,6 @@ function stopTime(){
 	clearInteval(counter);
 };
 
-// function hover(){
-// 	$('div.button').hover.addClass('hover');
-// }
-
 // "Start" will begin the trivia game
 $('#start').on('click', function(){
 	displayQuestion(qNumber);
@@ -144,7 +141,7 @@ $('#start').on('click', function(){
 });
 
 function displayTime(){
-	var time = 3;
+	var time = 30;
 	$('#timeDisplay').html('Time remaining: ' + time + ' seconds');
 	counter = setInterval(decrement, 1000);
 	function decrement(){
@@ -157,7 +154,7 @@ function displayTime(){
 			$('#correctAnswer').html('The correct answer is: ' + questions[qNumber].choices[questions[qNumber].answer]);
 			unanswered++;			
 			$('#imageResult').html(pictures[qNumber]);
-			setTimeout(fiveSeconds, 2000);
+			setTimeout(fiveSeconds, 5000);
 			clearInterval(counter);
 		}
 	}
@@ -191,7 +188,6 @@ function displayChoices(qNumber){
 
 	$('.choices').bind('click', function(){
 		var value = $(this).attr('id');
-		console.log(value);
 		compare(value, qNumber);
 	});
 };
@@ -199,25 +195,29 @@ function displayChoices(qNumber){
 // Checks if answer is correct
 function compare(selection, qNumber) {
 	var userChoice = selection;
-	console.log(userChoice);
+	// console.log(userChoice);
 	if(selection == ('selection' + questions[qNumber].answer)) {
-		console.log('match');
+		// console.log('match');
 		$('#question, #answerDisplay').empty();
 		$('#result').html('Yes!');
 		correct++;
 	}
 	else {
-		console.log('nope');
+		// console.log('nope');
 		$('#question, #answerDisplay').empty();
 		$('#result').html('Nope!');
-		$('#correctAnswer').html('The correct answer is: ' + questions[qNumber].choices[questions[qNumber].answer]);
+		$('#correctAnswer').html('The correct answer is: ' + 
+			questions[qNumber].choices[questions[qNumber].answer]);
 		incorrect++;
 	}
+			clearInterval(counter);
+
 	$('#imageResult').html(pictures[qNumber]);
 	setTimeout(fiveSeconds, 2000);
 };
 
-// Timer changes to next question after 5 seconds
+// Timer changes to next question after 5 seconds and finishes the game 
+// if there are no more questions
 function fiveSeconds(){
 	qNumber++;
 		$('#imageResult').empty();
@@ -225,13 +225,20 @@ function fiveSeconds(){
 		$('#correctAnswer').empty();
 	if(qNumber < questions.length){
 		displayQuestion(qNumber);
-
 	}
 	else{
-		console.log('Correct: ' + correct);
-		console.log('Incorrect: ' + incorrect);
-		console.log('Unanswered: ' + unanswered);
+		$('#result').html('Correct: ' + correct + '<br>'
+		 + 'Incorrect: ' + incorrect + '<br>'
+		 + 'Unanswered: ' + unanswered);
 
+		$('#game').append('<br><div class="button" id="start">Play Again?</div>');
+	$('.button').hover(
+		function() {$(this).addClass('hover');}, 
+		function() {$(this).removeClass('hover');}
+	);	
+		$('#start').on('click', function(){
+			displayQuestion(0);
+		});
 	}
 };
 
